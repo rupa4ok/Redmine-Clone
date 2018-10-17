@@ -1,5 +1,7 @@
 <?php
+
 use Illuminate\Support\Facades\Log;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
     \Log::error('Something went wrong', [
-        'person' => ['id' =>(string) 123, 'username' => 'John Doe', 'email' => 'john@doe.com']
+        'person' => ['id' => (string)123, 'username' => 'John Doe', 'email' => 'john@doe.com']
     ]);
     return view('welcome');
 });

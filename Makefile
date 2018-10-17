@@ -1,10 +1,10 @@
 install:
-    composer install
-    cp .env.example .env
-    php artisan key:generate
-
+		composer install
+env:
+		cp .env.example .env
+key:
+		php artisan key:generate
 lint:
-	composer run-script phpcs -- --standard=PSR2  app routes tests
-
+		composer run-script phpcs -- --standard=PSR2  app routes tests
 test:
-	composer run-script phpunit
+		composer run-script phpunit
