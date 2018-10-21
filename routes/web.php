@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Log;
+//use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,12 +14,14 @@ use Illuminate\Support\Facades\Log;
 */
 
 Route::get('/', function () {
-    \Log::error('Something went wrong', [
-        'person' => ['id' => (string)123, 'username' => 'John Doe', 'email' => 'john@doe.com']
-    ]);
+//    \Log::error('Something went wrong', [
+//        'person' => ['id' => (string)123, 'username' => 'John Doe', 'email' => 'john@doe.com']
+//    ]);
     return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/account/edit', 'AccountController@edit')->name('account.edit');
+Route::get('/account/update', 'AccountController@update')->name('account.update');
