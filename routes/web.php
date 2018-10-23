@@ -24,4 +24,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/account/edit', 'AccountController@edit')->name('account.edit');
-Route::get('/account/update', 'AccountController@update')->name('account.update');
+Route::put('/account', 'AccountController@update')->name('account.update');
