@@ -35,14 +35,11 @@ class AccountController extends Controller
         return redirect(route('account.edit'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        $user = Auth::user();
+        $user->delete();
+
+        return redirect(route('index'));
     }
 }

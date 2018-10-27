@@ -55,6 +55,26 @@
                         </form>
                     </div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">{{ __('Delete Account') }}</div>
+
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('account.delete') }}">
+                            @method('DELETE')
+                            @csrf
+                            <div class="form-group row">
+                                <label for="delete"
+                                       class="col-sm-4 col-form-label text-md-right">{{ $user->name }}</label>
+                                <div class="col-md-6">
+                                    <button id="delete" type="submit" class="btn btn-danger">
+                                        {{ __('Delete This Account') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
