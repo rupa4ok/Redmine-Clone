@@ -35,7 +35,7 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                            class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                           name="name" value="{{ $user->email }}" required>
+                                           name="name" value="{{ $user->name }}" required>
 
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">

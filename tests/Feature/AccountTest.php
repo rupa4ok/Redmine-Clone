@@ -28,4 +28,17 @@ class AccountTest extends TestCase
         $response = $this->actingAs($user)->call('DELETE', route('account.delete'));
         $this->assertDatabaseMissing('users', ['name' => 'testName']);
     }
+
+    public function testAccountUpdate()
+    {
+        $user = factory(User::class)->create([
+            'name' => 'testName',
+            'email' => 'test@domain.com'
+        ]);
+        $this->assertDatabaseHas('users', ['name' => 'testName', 'email' => 'test@domain.com']);
+        $this->actingAs($user)->call('PUT',
+            route('account.update'),
+            ['name' => 'newName', 'email' => 'newEmail@domain.com']);
+        $this->assertDatabaseHas('users', ['name' => 'newName', 'email' => 'newEmail@domain.com']);
+    }
 }
