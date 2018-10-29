@@ -5,6 +5,12 @@ php:
 services:
 - postgresql
 
+env:
+  global:
+  - DB_CONNECTION=pgsql
+  - DB_DATABASE=travis_ci_test
+  - DB_USERNAME=postgres
+
 install:
 - composer self-update
 - make install
