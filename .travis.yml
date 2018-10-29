@@ -9,3 +9,11 @@ install:
 - make key
 - make lint
 - make test
+
+after_script:
+- vendor/bin/test-reporter
+
+addons:
+  code_climate:
+    repo_token:
+      secure: "oGxb8Nkno3Va5AD3tfwt4jLxorIJjiNxMK8U/OFiGcrOW2Ebz99AkT5WVaWHWm5SS9DtKHsibdw6q+XHteD6soek4nH8Ca5oMpxy9vn4stfjmy1utAO6IlE2WnAHP5i/0SyocXHLYsN//68JbvkPtevJXbgOhUMsAmdH+ifbId9GLWHF24r67y5TfsPWeWbvxCNvdgDghLeYRFk2n1DyVuEoxI3JKxScfCTbjjbXqqiqAXhw6rIpb2+2ZSRfQ1/TGgSFImG4cUjSNMxmiMg+mK2DTCj5CVOXzcW6YAvBHZr+0md33MJwnhK4s9H4YNEk5QZBjOqbH3sB1j7x2mx1o+eBhfFOOoNtUu0RY1n7edygk1LM2uHnmgHvZjdsDtUPggi+c61ChgEhEvxSTr5NTX1d5m1IsM8gnKcy+/2TyeD6F/daT/JQwYerlJ10rbJDCXuoGBReg1sxy5opIPovrw5v/5lRCExccV3N4Q1k5C/Gr6+VVrOhdtHRFn68ZTIQcrVKMECahuKYtY/kDAH/9vAPreUfXIst9EiZT6Bk1MhmFBlIaWf0LP76IMCcTVVf3LoVPzxz/3b+d4vrHDFZ9lX0EbGVjWvDG8nGDB3AQNlYFprjKDTgYhCRvuk1dTJJ+gOxXc8esbhJJooJ2rYkfesaqDMwfmeV9zpdfhKfX2A="

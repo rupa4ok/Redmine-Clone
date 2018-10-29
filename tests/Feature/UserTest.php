@@ -73,7 +73,7 @@ class UserTest extends TestCase
         ]);
         $token = Password::createToken($user);
 
-        $response = $this->post(route('password.request'),[
+        $response = $this->post(route('password.request'), [
             'email' => 'testEmail@domain.com',
             'password' => 'newPass',
             'password_confirmation' => 'newPass',

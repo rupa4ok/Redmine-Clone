@@ -36,9 +36,11 @@ class AccountTest extends TestCase
             'email' => 'test@domain.com'
         ]);
         $this->assertDatabaseHas('users', ['name' => 'testName', 'email' => 'test@domain.com']);
-        $this->actingAs($user)->call('PUT',
+        $this->actingAs($user)->call(
+            'PUT',
             route('account.update'),
-            ['name' => 'newName', 'email' => 'newEmail@domain.com']);
+            ['name' => 'newName', 'email' => 'newEmail@domain.com']
+        );
         $this->assertDatabaseHas('users', ['name' => 'newName', 'email' => 'newEmail@domain.com']);
     }
 }

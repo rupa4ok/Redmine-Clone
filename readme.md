@@ -1,3 +1,4 @@
-[![Build Status](https://travis-ci.org/vkzhuk/project-lvl4-s315.svg?branch=master)](https://travis-ci.org/vkzhuk/project-lvl4-s315)[![Maintainability](https://api.codeclimate.com/v1/badges/9c48c626f6f3a4fd9959/maintainability)](https://codeclimate.com/github/vkzhuk/project-lvl4-s315/maintainability)
-
-**[https://clone-redmine.herokuapp.com/](https://clone-redmine.herokuapp.com/)**
+[![Build Status](https://travis-ci.org/vkzhuk/project-lvl4-s315.svg?branch=master)](https://travis-ci.org/vkzhuk/project-lvl4-s315)[![Maintainability](https://api.codeclimate.com/v1/badges/9c48c626f6f3a4fd9959/maintainability)](https://codeclimate.com/github/vkzhuk/project-lvl4-s315/maintainability)[![Test Coverage](https://api.codeclimate.com/v1/badges/9c48c626f6f3a4fd9959/test_coverage)](https://codeclimate.com/github/vkzhuk/project-lvl4-s315/test_coverage)
+# Readmine Clone
+## Access control list (ACL system)
+**DEMO:** **[https://clone-redmine.herokuapp.com/](https://clone-redmine.herokuapp.com/)**
