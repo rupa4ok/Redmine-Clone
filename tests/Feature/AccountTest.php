@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\User;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AccountTest extends TestCase
@@ -42,5 +43,21 @@ class AccountTest extends TestCase
             ['name' => 'newName', 'email' => 'newEmail@domain.com']
         );
         $this->assertDatabaseHas('users', ['name' => 'newName', 'email' => 'newEmail@domain.com']);
+    }
+
+    public function testAccountChangePassword()
+    {
+        $password = Hash::make('password');
+        $user = factory(User::class)->create([
+            'name' => 'testName',
+            'email' => 'testEmail@domain.com',
+            'password' => $password
+        ]);
+        $response = $this->actingAs($user)->call(
+            'PUT',
+            route('account.changePassword'),
+            ['password' => 'password', 'new_password' => 'newPassword', 'new_password_confirmation' => 'newPassword']
+        );
+        $this->assertTrue(Hash::check('newPassword', $user->fresh()->password));
     }
 }

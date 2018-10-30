@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class AccountController extends Controller
 {
@@ -41,5 +43,15 @@ class AccountController extends Controller
         $user->delete();
 
         return redirect(route('index'));
+    }
+
+    public function changePassword(Request $request)
+    {
+        $password = $request->input('password');
+        $newPassword = $request->input('new_password');
+        $newPasswordConfirmation = $request->input('new_password_confirmation');
+        auth()->user()->update([
+                'password' => Hash::make($newPassword)
+        ]);
     }
 }
