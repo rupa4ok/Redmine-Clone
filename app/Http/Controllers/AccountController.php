@@ -50,8 +50,11 @@ class AccountController extends Controller
         $password = $request->input('password');
         $newPassword = $request->input('new_password');
         $newPasswordConfirmation = $request->input('new_password_confirmation');
-        auth()->user()->update([
+        if ($newPassword === $newPasswordConfirmation && Hash::check($password, auth()->user()->password)) {
+            auth()->user()->update([
                 'password' => Hash::make($newPassword)
-        ]);
+            ]);
+        }
+        return redirect(route('home'));
     }
 }
