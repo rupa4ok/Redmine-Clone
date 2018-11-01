@@ -67,12 +67,12 @@
 
                                 <div class="col-md-6">
                                     <input id="password" type="password"
-                                           class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                           class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                            name="password" required>
 
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -84,12 +84,12 @@
 
                                 <div class="col-md-6">
                                     <input id="new_password" type="password"
-                                           class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                           class="form-control{{ $errors->has('new_password') ? ' is-invalid' : '' }}"
                                            name="new_password" required>
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('new_password'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('new_password') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -101,12 +101,12 @@
 
                                 <div class="col-md-6">
                                     <input id="new_password_confirmation" type="password"
-                                           class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                           class="form-control{{ $errors->has('new_password_confirmation') ? ' is-invalid' : '' }}"
                                            name="new_password_confirmation" required>
 
-                                    @if ($errors->has('name'))
+                                    @if ($errors->has('new_password_confirmation'))
                                         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('new_password_confirmation') }}</strong>
                                     </span>
                                     @endif
                                 </div>

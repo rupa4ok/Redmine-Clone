@@ -5,6 +5,6 @@ env:
 key:
 		php artisan key:generate
 lint:
-		composer run-script phpcs -- --standard=PSR2  app routes tests
+		composer run-script phpcs -- --standard=PSR12  app routes tests
 test:
 		composer run-script phpunit
