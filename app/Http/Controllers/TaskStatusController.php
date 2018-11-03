@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\TaskStatus;
+use Dotenv\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
 
 class TaskStatusController extends Controller
 {
@@ -20,7 +22,7 @@ class TaskStatusController extends Controller
     public function index()
     {
         $statuses = TaskStatus::all();
-        return view('statuses.index', compact($statuses));
+        return view('statuses.index', ['statuses' => $statuses]);
     }
 
     /**
@@ -30,62 +32,51 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        //
+        return view('statuses.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:task_statuses|min:3|max:255'
+        ]);
+        $created = TaskStatus::create(['name' => $request->input('name')]);
+        $created ? session()->flash('notifications', 'Task Status Created') : session()->flash('error', 'error');
+        return redirect(route('statuses.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function show(TaskStatus $taskStatus)
+    public function show($id)
     {
-        //
+        $taskStatus = TaskStatus::find($id);
+        return view('statuses.show', ['taskStatus' => $taskStatus]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TaskStatus $taskStatus)
+    public function edit($id)
     {
-        //
+        $taskStatus = TaskStatus::find($id);
+        return view('statuses.edit', compact('taskStatus'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TaskStatus $taskStatus)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:task_statuses|min:3|max:255'
+        ]);
+        $updated = TaskStatus::find($id)->update($request->all());
+        $updated ? session()->flash('notifications', 'Task Status Updated') : session()->flash('error', 'error');
+        return redirect(route('statuses.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\TaskStatus  $taskStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(TaskStatus $taskStatus)
+    public function destroy($id)
     {
-        //
+        $deleted = TaskStatus::find($id)->delete();
+        $deleted ? session()->flash('notifications', 'Task Status deleted') : session()->flash('error', 'error');
+        return redirect(route('statuses.index'));
     }
 }
