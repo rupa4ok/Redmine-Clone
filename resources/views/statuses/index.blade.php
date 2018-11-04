@@ -2,6 +2,12 @@
 
 @section('content')
     <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="list-group">
+                <a href="{{ route('statuses.create') }}"
+                   class="list-group-item list-group-item-action list-group-item-info">Create new Status</a>
+            </div>
+        </div>
         <div class="row justify-content-center">
             @foreach($statuses as $status)
                 <div class="col-sm-3 mb-4">
@@ -25,6 +31,9 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+        <div class="row justify-content-center">
+            {{ $statuses->links() }}
         </div>
     </div>
 @endsection
