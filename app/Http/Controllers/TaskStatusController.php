@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\TaskStatus;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Http\FormRequest;
 
 class TaskStatusController extends Controller
 {

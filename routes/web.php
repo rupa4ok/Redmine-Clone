@@ -12,3 +12,4 @@ Route::delete('/account', 'AccountController@destroy')->name('account.delete');
 Route::put('/account/changePassword', 'AccountController@changePassword')->name('account.changePassword');
 
 Route::resource('statuses', 'TaskStatusController');
+Route::resource('tasks', 'TaskController');
