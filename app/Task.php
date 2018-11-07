@@ -14,4 +14,14 @@ class Task extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function status()
+    {
+        return $this->belongsTo('App\TaskStatus', 'status_id');
+    }
+
+    public function executor()
+    {
+        return $this->belongsTo('App\TaskStatus', 'executor_id');
+    }
 }

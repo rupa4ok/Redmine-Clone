@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\TaskStatus;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,7 +18,7 @@ class TaskTest extends TestCase
     {
         parent::setUp();
         $this->user = factory(User::class)->create(['name' => 'testName']);
-        $
+        $this->taskStatus = factory(TaskStatus::class)->create(['name' => 'testStatus']);
     }
 
     public function testGetTasksList()
@@ -39,7 +40,12 @@ class TaskTest extends TestCase
         $response = $this->actingAs($this->user)->post(
             route(
                 'tasks.store',
-                ['name' => 'testTask', 'description' => 'descriptionTest']
+                [
+                    'name' => 'testTask',
+                    'description' => 'descriptionTest',
+                    'task_status_id' => $this->taskStatus->id,
+                    'executor_id' => $this->user->id
+                ]
             )
         );
 
@@ -48,7 +54,8 @@ class TaskTest extends TestCase
             [
                 'name' => 'testTask',
                 'description' => 'descriptionTest',
-                'creator_id' => $this->user->id
+                'creator_id' => $this->user->id,
+                'executor_id' => $this->user->id
             ]
         );
     }

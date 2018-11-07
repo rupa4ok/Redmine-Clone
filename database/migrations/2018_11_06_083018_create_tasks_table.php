@@ -17,11 +17,10 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->integer('creator_id')->nullable();
             $table->integer('status_id')->nullable();
+            $table->integer('executor_id')->nullable();
             $table->string('name');
             $table->text('description');
             $table->timestamps();
-
-            $table->foreign('creator_id')->references('creator_id')->on('users');
         });
     }
 

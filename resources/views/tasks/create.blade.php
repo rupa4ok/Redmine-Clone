@@ -27,7 +27,8 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+                                <label for="description"
+                                       class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="description" type="text"
@@ -40,6 +41,20 @@
                                     </span>
                                     @endif
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <select class="custom-select" name="task_status_id" size="3">
+                                    @foreach($statuses as $status)
+                                        <option value="{{$status->id}}">{{$status->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <select class="custom-select" name="executor_id" size="3">
+                                    @foreach($users as $user)
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">

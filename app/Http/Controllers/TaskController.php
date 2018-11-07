@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\TaskStatus;
+use App\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -28,7 +29,8 @@ class TaskController extends Controller
     public function create()
     {
         $statuses = TaskStatus::all('id', 'name');
-        return view('tasks.create');
+        $users = User::all('id', 'name');
+        return view('tasks.create', ['statuses' => $statuses, 'users' => $users]);
     }
 
     /**
@@ -43,13 +45,12 @@ class TaskController extends Controller
             'name' => 'required|max:255|min:3',
             'description' => 'required|min:3'
         ]);
-//        $taskStatus = TaskStatus::find($request->input('task_status_id'));
+        $taskStatus = TaskStatus::find($request->input('task_status_id'));
         $user = auth()->user();
-        $user->tasks()->save($created = Task::create([
+        $created = $user->tasks()->create([
             'name' => $request->input('name'),
             'description' => $request->input('description')
-        ]));
-//        ->save($taskStatus);
+        ])->status()->associate($taskStatus)->executor()->associate($request->input('executor_id'))->save();
         $created ? session()->flash('notifications', 'Task Created') : session()->flash('error', 'error');
         return redirect(route('tasks.index'));
     }
