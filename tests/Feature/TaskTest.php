@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Task;
 use App\TaskStatus;
 use App\User;
 use Tests\TestCase;
@@ -13,12 +14,20 @@ class TaskTest extends TestCase
     use RefreshDatabase;
     protected $user;
     protected $taskStatus;
+    protected $task;
 
     public function setUp()
     {
         parent::setUp();
         $this->user = factory(User::class)->create(['name' => 'testName']);
         $this->taskStatus = factory(TaskStatus::class)->create(['name' => 'testStatus']);
+        $this->task = factory(Task::class)->create([
+            'name' => 'testTask',
+            'description' => 'testDescription',
+            'status_id' => $this->taskStatus->id,
+            'executor_id' => $this->user->id,
+            'creator_id' => $this->user->id
+        ]);
     }
 
     public function testGetTasksList()
@@ -43,7 +52,7 @@ class TaskTest extends TestCase
                 [
                     'name' => 'testTask',
                     'description' => 'descriptionTest',
-                    'task_status_id' => $this->taskStatus->id,
+                    'status_id' => $this->taskStatus->id,
                     'executor_id' => $this->user->id
                 ]
             )
@@ -55,8 +64,23 @@ class TaskTest extends TestCase
                 'name' => 'testTask',
                 'description' => 'descriptionTest',
                 'creator_id' => $this->user->id,
-                'executor_id' => $this->user->id
+                'executor_id' => $this->user->id,
+                'status_id' => $this->taskStatus->id
             ]
         );
+    }
+
+    public function testGetTaskPage()
+    {
+
+        $response = $this->actingAs($this->user)->get(route('tasks.show', $this->task->id));
+        $response->assertOk();
+    }
+
+    public function testGetTaskEditPage()
+    {
+        $response = $this->actingAs($this->user)->get(route('tasks.edit', $this->task->id));
+
+        $response->assertOk();
     }
 }

@@ -8,6 +8,8 @@ class TaskStatus extends Model
 {
     protected $fillable = [ 'name' ];
 
+    protected $table = 'task_statuses';
+
     public function task()
     {
         return $this->hasMany('App\Task');

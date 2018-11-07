@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <select class="custom-select" name="task_status_id" size="3">
+                                <select class="custom-select" name="status_id" size="3">
                                     @foreach($statuses as $status)
                                         <option value="{{$status->id}}">{{$status->name}}</option>
                                     @endforeach

@@ -50,10 +50,9 @@ class TaskStatusController extends Controller
         return redirect(route('statuses.index'));
     }
 
-    public function show($id)
+    public function show(TaskStatus $status)
     {
-        $taskStatus = TaskStatus::find($id);
-        return view('statuses.show', ['taskStatus' => $taskStatus]);
+        return view('statuses.show', ['taskStatus' => $status]);
     }
 
     public function edit($id)

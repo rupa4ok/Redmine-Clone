@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +51,7 @@ class TaskController extends Controller
             'name' => 'required|max:255|min:3',
             'description' => 'required|min:3'
         ]);
-        $taskStatus = TaskStatus::find($request->input('task_status_id'));
+        $taskStatus = TaskStatus::find($request->input('status_id'));
         $user = auth()->user();
         $created = $user->tasks()->create([
             'name' => $request->input('name'),
@@ -63,7 +69,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+
     }
 
     /**
