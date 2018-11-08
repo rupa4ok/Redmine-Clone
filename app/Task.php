@@ -22,6 +22,6 @@ class Task extends Model
 
     public function executor()
     {
-        return $this->belongsTo('App\TaskStatus', 'executor_id');
+        return $this->belongsTo('App\User', 'executor_id');
     }
 }

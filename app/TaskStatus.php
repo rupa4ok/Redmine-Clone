@@ -14,4 +14,9 @@ class TaskStatus extends Model
     {
         return $this->hasMany('App\Task');
     }
+
+    public function scopeExcept($query, $id)
+    {
+        return $query->where('id', '<>', $id);
+    }
 }

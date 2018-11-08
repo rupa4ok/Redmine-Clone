@@ -32,4 +32,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Task', 'creator_id');
     }
+
+    public function scopeExcept($query, $id)
+    {
+        return $query->where('id', '<>', $id);
+    }
 }

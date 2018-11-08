@@ -83,4 +83,30 @@ class TaskTest extends TestCase
 
         $response->assertOk();
     }
+
+    public function testTaskUpdate()
+    {
+        $newUser = factory(User::class)->create();
+        $newTaskStatus = factory(TaskStatus::class)->create();
+        $this->actingAs($this->user)->call(
+            'PUT',
+            route('tasks.update', $this->task->id),
+            [
+                'name' => 'newName',
+                'description' => 'newDescription',
+                'status_id' => $newTaskStatus->id,
+                'executor_id' => $newUser->id
+            ]
+        );
+
+        $this->assertDatabaseHas(
+            'tasks',
+            [
+                'name' => 'newName',
+                'description' => 'newDescription',
+                'executor_id' => $newUser->id,
+                'status_id' => $newTaskStatus->id
+            ]
+        );
+    }
 }

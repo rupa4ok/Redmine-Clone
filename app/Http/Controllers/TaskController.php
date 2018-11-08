@@ -6,6 +6,7 @@ use App\Task;
 use App\TaskStatus;
 use App\User;
 use Illuminate\Http\Request;
+use TYPO3\CMS\Reports\Status;
 
 class TaskController extends Controller
 {
@@ -42,14 +43,16 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255|min:3',
-            'description' => 'required|min:3'
+            'description' => 'required|min:3',
+            'status_id' => 'required',
+            'executor_id' => 'required'
         ]);
         $taskStatus = TaskStatus::find($request->input('status_id'));
         $user = auth()->user();
@@ -64,41 +67,66 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Task  $task
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
     public function show(Task $task)
     {
-
+        $status = $task->status()->get(['name'])->first();
+        $executor = $task->executor()->get(['name', 'email'])->first();
+        return view('tasks.show', ['task' => $task, 'status' => $status, 'executor' => $executor]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Task  $task
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
     public function edit(Task $task)
     {
-        //
+        $status = $task->status()->get(['name', 'id'])->first();
+        $executor = $task->executor()->get(['name', 'email', 'id'])->first();
+        $freeStatuses = TaskStatus::except($status->id)->get(['name', 'id']);
+        $freeUsers = User::except($executor->id)->get(['name', 'email', 'id']);
+        return view('tasks.edit', [
+            'task' => $task,
+            'status' => $status,
+            'executor' => $executor,
+            'freeStatuses' => $freeStatuses,
+            'freeUsers' => $freeUsers
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Task  $task
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255|min:3',
+            'description' => 'required|min:3',
+            'status_id' => 'required',
+            'executor_id' => 'required'
+        ]);
+        $taskStatus = TaskStatus::find($request->input('status_id'));
+        $task->name = $request->input('name');
+        $task->description = $request->input('description');
+        $updated = $task->status()->associate($taskStatus)
+            ->executor()->associate($request->input('executor_id'))
+            ->save();
+        $updated ? session()->flash('notifications', 'Task Updated') : session()->flash('error', 'error');
+        return redirect(route('tasks.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Task  $task
+     * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
     public function destroy(Task $task)
