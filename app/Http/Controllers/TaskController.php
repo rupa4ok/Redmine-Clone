@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Task;
 use App\TaskStatus;
 use App\User;
 use Illuminate\Http\Request;
-use TYPO3\CMS\Reports\Status;
 
 class TaskController extends Controller
 {
@@ -21,11 +21,16 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::paginate(12);
-
-        return view('tasks.index', ['tasks' => $tasks]);
+        $tasks = Task::filter($request->all())->paginate(12);
+        $statuses = TaskStatus::get(['name', 'id']);
+        $executors = User::get(['name', 'id']);
+        $tags = Tag::get(['name', 'id']);
+        return view('tasks.index', ['tasks' => $tasks,
+            'statuses' => $statuses,
+            'executors' => $executors,
+            'tags' => $tags]);
     }
 
     /**
@@ -137,6 +142,6 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        return redirect('tasks.index');
     }
 }

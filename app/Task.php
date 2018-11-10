@@ -38,4 +38,46 @@ class Task extends Model
         }, $tagNames);
         return $this->tags()->sync($tagIds);
     }
+
+    public function scopeFilter($query, $data)
+    {
+        if (isset($data['executor_id'])) {
+            $query->executor($data['executor_id']);
+        }
+
+        if (isset($data['status_id'])) {
+            $query->status($data['status_id']);
+        }
+
+        if (isset($data['tags'])) {
+            $query->tags($data['tags']);
+        }
+
+        if (isset($data['my'])) {
+            $query->my();
+        }
+        return $query;
+    }
+
+    public function scopeExecutor($query, $executor_id)
+    {
+        return $query->where('executor_id', $executor_id);
+    }
+
+    public function scopeStatus($query, $status_id)
+    {
+        return $query->where('status_id', $status_id);
+    }
+
+    public function scopeMy($query)
+    {
+        return $query->where('executor_id', auth()->user()->id);
+    }
+
+    public function scopeTags($query, $tags)
+    {
+        return $query->whereHas('tags', function ($query) use ($tags) {
+            $query->whereIn('id', $tags);
+        });
+    }
 }
