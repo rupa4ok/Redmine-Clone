@@ -56,11 +56,13 @@ class TaskController extends Controller
         ]);
         $taskStatus = TaskStatus::find($request->input('status_id'));
         $user = auth()->user();
-        $created = $user->tasks()->create([
+        $task = $user->tasks()->create([
             'name' => $request->input('name'),
             'description' => $request->input('description')
-        ])->status()->associate($taskStatus)->executor()->associate($request->input('executor_id'))->save();
-        $created ? session()->flash('notifications', 'Task Created') : session()->flash('error', 'error');
+        ]);
+        $task->status()->associate($taskStatus)->executor()->associate($request->input('executor_id'))->save();
+        $task->syncTags($request->input('tags'));
+        $task ? session()->flash('notifications', 'Task Created') : session()->flash('error', 'error');
         return redirect(route('tasks.index'));
     }
 
@@ -74,7 +76,11 @@ class TaskController extends Controller
     {
         $status = $task->status()->get(['name'])->first();
         $executor = $task->executor()->get(['name', 'email'])->first();
-        return view('tasks.show', ['task' => $task, 'status' => $status, 'executor' => $executor]);
+        $tags = $task->tags()->get();
+        return view('tasks.show', ['task' => $task,
+            'status' => $status,
+            'executor' => $executor,
+            'tags' => $tags]);
     }
 
     /**

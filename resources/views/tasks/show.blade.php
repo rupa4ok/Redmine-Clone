@@ -11,6 +11,9 @@
                     <div class="h5 card-title"><strong>{{ $executor->name }}</strong></div>
                     <div class="h5 card-title"><strong>{{ $executor->email }}</strong></div>
                     <div class="h5 card-title"><strong>{{ $task->created_at }}</strong></div>
+                    @foreach($tags as $tag)
+                        <div class="h5 card-title"><strong>{{ $tag->name }}</strong></div>
+                    @endforeach
                 </div>
                 <div class="d-flex card-footer text-muted">
                     <a href="{{ route('statuses.edit', $task->id) }}" class="btn btn-warning mr-4">Edit</a>
