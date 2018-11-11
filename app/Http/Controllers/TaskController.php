@@ -42,7 +42,8 @@ class TaskController extends Controller
     {
         $statuses = TaskStatus::all('id', 'name');
         $users = User::all('id', 'name');
-        return view('tasks.create', ['statuses' => $statuses, 'users' => $users]);
+        $tags = Tag::all('id', 'name');
+        return view('tasks.create', ['statuses' => $statuses, 'users' => $users, 'tags' => $tags]);
     }
 
     /**
@@ -66,7 +67,7 @@ class TaskController extends Controller
             'description' => $request->input('description')
         ]);
         $task->status()->associate($taskStatus)->executor()->associate($request->input('executor_id'))->save();
-        $task->syncTags($request->input('tags'));
+        $task->syncTags($request->input('tags') ?? []);
         $task ? session()->flash('notifications', 'Task Created') : session()->flash('error', 'error');
         return redirect(route('tasks.index'));
     }

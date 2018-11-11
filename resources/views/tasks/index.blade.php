@@ -101,8 +101,8 @@
                 </div>
             @endforeach
         </div>
-        <div class="row justify-content-center">
-            {{ $tasks->links() }}
+        <div class="d-flex justify-content-center card-footer">
+                {{ $tasks->links() }}
         </div>
     </div>
     <script>

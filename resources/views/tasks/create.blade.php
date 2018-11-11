@@ -46,26 +46,50 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <select class="custom-select" name="status_id" size="3">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="status">{{ _('Status') }}</label>
+                                </div>
+                                <select class="custom-select custom-select-lg" id="status" name="status_id" size="1">
                                     @foreach($statuses as $status)
                                         <option value="{{$status->id}}">{{$status->name}}</option>
                                     @endforeach
                                 </select>
+                                @if ($errors->has('status_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('status_id') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="form-group row">
-                                <select class="custom-select" name="executor_id" size="3">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="executor">{{ _('Executor') }}</label>
+                                </div>
+                                <select class="custom-select custom-select-lg" name="executor_id" size="1" id="executor">
                                     @foreach($users as $user)
                                         <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
                                 </select>
+                                @if ($errors->has('executor_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('executor_id') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="tag_from">{{ _('Tags') }}</label>
+                                </div>
                                 <select id="tag_from" class="form-control" multiple="multiple" name="tags[]">
-                                    <option selected="selected">orange</option>
-                                    <option>white</option>
-                                    <option selected="selected">purple</option>
+                                    @foreach($tags as $tag)
+                                        <option value="{{ $tag->id }}"> {{ $tag->name }} </option>
+                                    @endforeach
                                 </select>
+                                @if ($errors->has('tags'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('tags') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">

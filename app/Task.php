@@ -30,7 +30,7 @@ class Task extends Model
         return $this->belongsToMany('App\Tag');
     }
 
-    public function syncTags(array $tagNames)
+    public function syncTags(array $tagNames = [])
     {
         $tagIds = array_map(function ($value) {
             $tag = Tag::firstOrCreate(['name' => $value]);
