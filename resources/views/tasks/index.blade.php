@@ -85,10 +85,10 @@
                             <div class="h5 card-title text-center">#{{ $task->id }}</div>
                             <p class="card-text h5 text-center"><strong>{{ $task->name }}</strong></p>
                             <div class="d-flex justify-content-around">
-                                <a href="{{ route('statuses.show', $task->id) }}" class="btn btn-primary">Show</a>
-                                <a href="{{ route('statuses.edit', $task->id) }}"
+                                <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-primary">Show</a>
+                                <a href="{{ route('tasks.edit', $task->id) }}"
                                    class="btn btn-warning mr-4">Edit</a>
-                                <form action="{{route('statuses.destroy', $task->id)}}" method="POST">
+                                <form action="{{route('tasks.destroy', $task->id)}}" method="POST">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger">

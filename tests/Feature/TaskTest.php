@@ -109,4 +109,10 @@ class TaskTest extends TestCase
             ]
         );
     }
+
+    public function testDeleteTask()
+    {
+        $this->actingAs($this->user)->call('DELETE', route('tasks.destroy', $this->task->id));
+        $this->assertDatabaseMissing('tasks', ['name' => 'testTask', 'description' => 'testDescription']);
+    }
 }

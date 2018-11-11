@@ -5,11 +5,19 @@ php:
 services:
 - postgresql
 
+before_script:
+- composer run-script post-root-package-install
+- composer run-script post-create-project-cmd
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- ./cc-test-reporter before-build
+
 env:
   global:
   - DB_CONNECTION=pgsql
   - DB_DATABASE=travis_ci_test
   - DB_USERNAME=postgres
+  - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)
 
 before_install:
 - sh -c "if [ '$DB_CONNECTION' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS travis_ci_test;' -U postgres; fi"
@@ -27,8 +35,4 @@ after_script:
 
 script:
 - make lint test
-
-addons:
-  code_climate:
-    repo_token:
-      secure: "oGxb8Nkno3Va5AD3tfwt4jLxorIJjiNxMK8U/OFiGcrOW2Ebz99AkT5WVaWHWm5SS9DtKHsibdw6q+XHteD6soek4nH8Ca5oMpxy9vn4stfjmy1utAO6IlE2WnAHP5i/0SyocXHLYsN//68JbvkPtevJXbgOhUMsAmdH+ifbId9GLWHF24r67y5TfsPWeWbvxCNvdgDghLeYRFk2n1DyVuEoxI3JKxScfCTbjjbXqqiqAXhw6rIpb2+2ZSRfQ1/TGgSFImG4cUjSNMxmiMg+mK2DTCj5CVOXzcW6YAvBHZr+0md33MJwnhK4s9H4YNEk5QZBjOqbH3sB1j7x2mx1o+eBhfFOOoNtUu0RY1n7edygk1LM2uHnmgHvZjdsDtUPggi+c61ChgEhEvxSTr5NTX1d5m1IsM8gnKcy+/2TyeD6F/daT/JQwYerlJ10rbJDCXuoGBReg1sxy5opIPovrw5v/5lRCExccV3N4Q1k5C/Gr6+VVrOhdtHRFn68ZTIQcrVKMECahuKYtY/kDAH/9vAPreUfXIst9EiZT6Bk1MhmFBlIaWf0LP76IMCcTVVf3LoVPzxz/3b+d4vrHDFZ9lX0EbGVjWvDG8nGDB3AQNlYFprjKDTgYhCRvuk1dTJJ+gOxXc8esbhJJooJ2rYkfesaqDMwfmeV9zpdfhKfX2A="
+- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
