@@ -81,9 +81,16 @@
             @foreach($tasks as $task)
                 <div class="col-sm-3 mb-4">
                     <div class="card">
+                        <div class="card-header">
+                            <div class="h5 card-title d-flex text-center flex-column">
+                                <div>Task #{{$task->id}}</div>
+                                <div><strong>{{ $task->name }}</strong></div>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <div class="h5 card-title text-center">#{{ $task->id }}</div>
-                            <p class="card-text h5 text-center"><strong>{{ $task->name }}</strong></p>
+                            <p class="card-text"> {{ str_limit($task->description, 75) }}</p>
+                        </div>
+                        <div class="card-footer">
                             <div class="d-flex justify-content-around">
                                 <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-primary">Show</a>
                                 <a href="{{ route('tasks.edit', $task->id) }}"
@@ -102,7 +109,7 @@
             @endforeach
         </div>
         <div class="d-flex justify-content-center card-footer">
-                {{ $tasks->links() }}
+            {{ $tasks->links() }}
         </div>
     </div>
     <script>

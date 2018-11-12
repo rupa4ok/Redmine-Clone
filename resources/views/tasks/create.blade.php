@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="status">{{ _('Status') }}</label>
+                                    <label class="input-group-text" for="status">{{ __('Status') }}</label>
                                 </div>
                                 <select class="custom-select custom-select-lg" id="status" name="status_id" size="1">
                                     @foreach($statuses as $status)
@@ -63,7 +63,7 @@
                             </div>
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="executor">{{ _('Executor') }}</label>
+                                    <label class="input-group-text" for="executor">{{ __('Executor') }}</label>
                                 </div>
                                 <select class="custom-select custom-select-lg" name="executor_id" size="1" id="executor">
                                     @foreach($users as $user)
@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
-                                    <label class="input-group-text" for="tag_from">{{ _('Tags') }}</label>
+                                    <label class="input-group-text" for="tag_from">{{ __('Tags') }}</label>
                                 </div>
                                 <select id="tag_from" class="form-control" multiple="multiple" name="tags[]">
                                     @foreach($tags as $tag)

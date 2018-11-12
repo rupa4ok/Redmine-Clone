@@ -4,15 +4,24 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="card w-100">
-                <div class="h5 card-header">Tag #{{$task->id}}</div>
-                <div class="card-body border border-info">
-                    <div class="h5 card-title"><strong>{{ $task->description }}</strong></div>
-                    <div class="h5 card-title"><strong>{{ $status->name }}</strong></div>
-                    <div class="h5 card-title"><strong>{{ $executor->name }}</strong></div>
-                    <div class="h5 card-title"><strong>{{ $executor->email }}</strong></div>
-                    <div class="h5 card-title"><strong>{{ $task->created_at }}</strong></div>
+                <div class="h5 card-header">Task #{{$task->id}}</div>
+                <div class="card-body border">
+                    <div class="h5 card-title"><strong> {{ $task->name }}</strong> <span
+                                class="badge badge-info"> {{ $status->name }} </span></div>
+                    <div class="card-text mb-2"><strong>Description:</strong> {{ $task->description }}</div>
+
+                    <div class="list-group">
+                        <button type="button" class="list-group-item list-group-item-action"><strong>Executor
+                                Name:</strong> {{ $executor->name }}</button>
+                        <button type="button" class="list-group-item list-group-item-action"><strong>Executor
+                                Email:</strong> {{ $executor->email }}</button>
+                        <button type="button" class="list-group-item list-group-item-action"><strong>Task Created
+                                At:</strong> {{ $task->created_at }}</button>
+                        <button type="button" class="list-group-item list-group-item-action"><strong>TaskUpdated
+                                At:</strong> {{ $task->updated_at }}</button>
+                    </div>
                     @foreach($tags as $tag)
-                        <div class="h5 card-title"><strong>{{ $tag->name }}</strong></div>
+                        <span class="badge badge-info">{{ $tag->name }}</span>
                     @endforeach
                 </div>
                 <div class="d-flex card-footer text-muted">
