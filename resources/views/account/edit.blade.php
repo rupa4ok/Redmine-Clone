@@ -132,7 +132,8 @@
                                 <label for="delete"
                                        class="col-sm-4 col-form-label text-md-right">{{ $user->name }}</label>
                                 <div class="col-md-6">
-                                    <button id="delete" type="submit" class="btn btn-danger">
+                                    <button id="delete" type="submit" class="btn btn-danger"
+                                            data-confirm="Are you sure you want to Delete Account?">
                                         {{ __('Delete This Account') }}
                                     </button>
                                 </div>

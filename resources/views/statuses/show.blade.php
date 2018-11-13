@@ -12,7 +12,7 @@
                         <form action="{{route('statuses.destroy', $taskStatus->id)}}" method="POST">
                             @method('DELETE')
                             @csrf
-                            <button type="submit" class="btn btn-danger">
+                            <button type="submit" class="btn btn-danger" data-confirm="Are you sure you want to submit?">
                                 {{ __('Delete') }}
                             </button>
                         </form>
