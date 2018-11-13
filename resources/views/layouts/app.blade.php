@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta name="csrf-param" content="_token" />
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
@@ -78,16 +78,11 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                <a href="{{ route('logout') }}" class="dropdown-item"
+                                   data-method="post"
+                                   data-confirm="Are you sure you want to logout?">
                                     {{ __('Logout') }}
                                 </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                      style="display: none;">
-                                    @csrf
-                                </form>
                                 <a class="dropdown-item" href="{{ route('account.edit') }}">
                                     {{ __('Settings') }}
                                 </a>

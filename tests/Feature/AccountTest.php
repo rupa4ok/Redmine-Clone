@@ -26,7 +26,7 @@ class AccountTest extends TestCase
             'name' => 'testName'
         ]);
         $this->assertDatabaseHas('users', ['name' => 'testName']);
-        $response = $this->actingAs($user)->call('DELETE', route('account.delete'));
+        $response = $this->actingAs($user)->call('DELETE', route('account.destroy'));
         $this->assertDatabaseMissing('users', ['name' => 'testName']);
     }
 
