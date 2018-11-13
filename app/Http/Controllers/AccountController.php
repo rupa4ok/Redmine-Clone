@@ -61,13 +61,10 @@ class AccountController extends Controller
         $newPassword = $request->input('new_password');
         $newPasswordConfirmation = $request->input('new_password_confirmation');
         if ($newPassword === $newPasswordConfirmation && Hash::check($password, auth()->user()->password)) {
-            $updated = auth()->user()->update([
+            auth()->user()->update([
                 'password' => Hash::make($newPassword)
             ]);
-            $updated ? session()->flash('notification', 'Success to update account')
-                    : session()->flash('error', 'error');
-        } else {
-            session()->flash('error', 'password doesn\'t match');
+            session()->flash('notification', 'Success to update account');
         }
         return redirect(route('account.edit'));
     }

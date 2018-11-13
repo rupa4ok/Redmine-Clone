@@ -93,18 +93,11 @@
     </nav>
 
     <main class="py-4">
-        @if(session()->has('notification') || session()->has('error'))
+        @if(session()->has('notification'))
             <div class="container">
-                @if(session()->has('notification'))
                     <div class="alert alert-success" role="alert">
                         {{ session()->get('notification') }}
                     </div>
-                @endif
-                @if(session()->has('error'))
-                    <div class="alert alert-danger" role="alert">
-                        {{session()->get('error')}}
-                    </div>
-                @endif
             </div>
         @endif
         @yield('content')

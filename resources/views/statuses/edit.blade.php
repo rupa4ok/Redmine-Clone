@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Task status name') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('statuses.update', $taskStatus->id) }}">
+                        <form method="POST" action="{{ route('statuses.update', $status->id) }}">
                             @method('PUT')
                             @csrf
                             <div class="form-group row">
@@ -17,7 +17,7 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                            class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                           name="name" value="{{ $taskStatus->name }}" required>
+                                           name="name" value="{{ $status->name }}" required>
 
                                     @if ($errors->has('name'))
                                         <span class="invalid-feedback" role="alert">

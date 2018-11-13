@@ -125,7 +125,7 @@
                     <div class="card-header">{{ __('Delete Account') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('account.delete') }}">
+                        <form method="POST" action="{{ route('account.destroy') }}">
                             @method('DELETE')
                             @csrf
                             <div class="form-group row">

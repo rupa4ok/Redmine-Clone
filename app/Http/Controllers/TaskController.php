@@ -68,7 +68,7 @@ class TaskController extends Controller
         ]);
         $task->status()->associate($taskStatus)->executor()->associate($request->input('executor_id'))->save();
         $task->syncTags($request->input('tags') ?? []);
-        $task ? session()->flash('notifications', 'Task Created') : session()->flash('error', 'error');
+        session()->flash('notifications', 'Task Created');
         return redirect(route('tasks.index'));
     }
 
@@ -80,9 +80,9 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        $status = $task->status()->get(['name'])->first();
-        $executor = $task->executor()->get(['name', 'email'])->first();
-        $tags = $task->tags()->get();
+        $status = $task->status;
+        $executor = $task->executor;
+        $tags = $task->tags;
         return view('tasks.show', ['task' => $task,
             'status' => $status,
             'executor' => $executor,
@@ -97,8 +97,8 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        $status = $task->status()->get(['name', 'id'])->first();
-        $executor = $task->executor()->get(['name', 'email', 'id'])->first();
+        $status = $task->status;
+        $executor = $task->executor;
         $freeStatuses = TaskStatus::except($status->id)->get(['name', 'id']);
         $freeUsers = User::except($executor->id)->get(['name', 'email', 'id']);
         return view('tasks.edit', [

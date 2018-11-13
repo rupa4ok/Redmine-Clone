@@ -45,8 +45,9 @@ class TaskStatusController extends Controller
         $request->validate([
             'name' => 'required|unique:task_statuses|min:3|max:255'
         ]);
-        $created = TaskStatus::create(['name' => $request->input('name')]);
-        $created ? session()->flash('notifications', 'Task Status Created') : session()->flash('error', 'error');
+        $taskStatus = new TaskStatus($request->all());
+        $taskStatus->save();
+        session()->flash('notifications', 'Task Status Created');
         return redirect(route('statuses.index'));
     }
 
@@ -55,19 +56,18 @@ class TaskStatusController extends Controller
         return view('statuses.show', ['taskStatus' => $status]);
     }
 
-    public function edit($id)
+    public function edit(TaskStatus $status)
     {
-        $taskStatus = TaskStatus::find($id);
-        return view('statuses.edit', compact('taskStatus'));
+        return view('statuses.edit', compact('status'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, TaskStatus $status)
     {
         $request->validate([
             'name' => 'required|unique:task_statuses|min:3|max:255'
         ]);
-        $updated = TaskStatus::find($id)->update($request->all());
-        $updated ? session()->flash('notifications', 'Task Status Updated') : session()->flash('error', 'error');
+        $status->update($request->all());
+        session()->flash('notifications', 'Task Status Updated');
         return redirect(route('statuses.index'));
     }
 
