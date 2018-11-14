@@ -96,7 +96,9 @@
             </div>
         </div>
     </div>
+@endsection
 
+@section('scripts')
     <script>
         $(document).ready(function () {
             $('#tag_from').select2({
@@ -107,4 +109,3 @@
         });
     </script>
 @endsection
-

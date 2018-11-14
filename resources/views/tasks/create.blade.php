@@ -40,7 +40,7 @@
                                             name="description" required></textarea>
 
                                     @if ($errors->has('description'))
-                                            <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </span>
                                     @endif
@@ -105,7 +105,9 @@
             </div>
         </div>
     </div>
+@endsection
 
+@section('scripts')
     <script>
         $(document).ready(function () {
             $('#tag_from').select2({
@@ -116,4 +118,3 @@
         });
     </script>
 @endsection
-
