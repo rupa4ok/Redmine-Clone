@@ -12,32 +12,36 @@ class AccountTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->user = factory(User::class)->create([
+            'name' => 'testName',
+            'email' => 'test@domain.com'
+        ]);
+    }
+
     public function testGetSettingsPage()
     {
-        $user = factory(User::class)->create();
-        $response = $this->actingAs($user)->get(route('account.edit'));
+        $response = $this->actingAs($this->user)->get(route('account.edit'));
 
         $response->assertOk();
     }
 
     public function testAccountDelete()
     {
-        $user = factory(User::class)->create([
-            'name' => 'testName'
-        ]);
         $this->assertDatabaseHas('users', ['name' => 'testName']);
-        $response = $this->actingAs($user)->call('DELETE', route('account.destroy'));
+        $response = $this->actingAs($this->user)->call('DELETE', route('account.destroy'));
         $this->assertDatabaseMissing('users', ['name' => 'testName']);
     }
 
     public function testAccountUpdate()
     {
-        $user = factory(User::class)->create([
-            'name' => 'testName',
-            'email' => 'test@domain.com'
-        ]);
         $this->assertDatabaseHas('users', ['name' => 'testName', 'email' => 'test@domain.com']);
-        $this->actingAs($user)->call(
+        $this->actingAs($this->user)->call(
             'PUT',
             route('account.update'),
             ['name' => 'newName', 'email' => 'newEmail@domain.com']
@@ -47,17 +51,8 @@ class AccountTest extends TestCase
 
     public function testAccountChangePassword()
     {
-        $password = Hash::make('password');
-        $user = factory(User::class)->create([
-            'name' => 'testName',
-            'email' => 'testEmail@domain.com',
-            'password' => $password
-        ]);
-        $response = $this->actingAs($user)->call(
-            'PUT',
-            route('account.changePassword'),
-            ['password' => 'password', 'new_password' => 'newPassword', 'new_password_confirmation' => 'newPassword']
-        );
-        $this->assertTrue(Hash::check('newPassword', $user->fresh()->password));
+        $response = $this->actingAs($this->user)->post(route('password.email'));
+
+        $response->assertSessionHasNoErrors();
     }
 }

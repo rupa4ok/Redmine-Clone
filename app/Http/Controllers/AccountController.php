@@ -32,13 +32,13 @@ class AccountController extends Controller
     {
         $request->validate([
             'name' => 'required|max:255|min:2',
-            'email' => 'required|max:254|min:5'
+            'email' => 'required|max:254|min:5|unique:users'
         ]);
-        $updated = auth()->user()->update([
+        auth()->user()->update([
             'name' => $request->input('name'),
             'email' => $request->input('email')
         ]);
-        $updated ? session()->flash('notification', 'Success to update account') : session()->flash('error', 'error');
+        session()->flash('notification', 'Success to update account');
         return redirect(route('account.edit'));
     }
 
@@ -48,24 +48,5 @@ class AccountController extends Controller
         $deleted = $user->delete();
         $deleted ?: session()->flash('error', 'error');
         return redirect(route('index'));
-    }
-
-    public function changePassword(Request $request)
-    {
-        $request->validate([
-            'password' => 'required|max:255|min:6',
-            'new_password' => 'required|max:255|min:6',
-            'new_password_confirmation' => 'required|max:255|min:6'
-        ]);
-        $password = $request->input('password');
-        $newPassword = $request->input('new_password');
-        $newPasswordConfirmation = $request->input('new_password_confirmation');
-        if ($newPassword === $newPasswordConfirmation && Hash::check($password, auth()->user()->password)) {
-            auth()->user()->update([
-                'password' => Hash::make($newPassword)
-            ]);
-            session()->flash('notification', 'Success to update account');
-        }
-        return redirect(route('account.edit'));
     }
 }

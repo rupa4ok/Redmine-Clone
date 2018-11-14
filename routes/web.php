@@ -12,10 +12,7 @@ Route::resource('account', 'AccountController')->except([
 ])->parameters([
     'account' => 'account?'
 ]);
-Route::get('/account/edit/', 'AccountController@edit')->name('account.edit');
-//Route::put('/account/{account?}', 'AccountController@update')->name('account.update');
-//Route::delete('/account/{account?}', 'AccountController@destroy')->name('account.delete');
-Route::put('/account/changePassword', 'AccountController@changePassword')->name('account.changePassword');
+Route::get('/account/edit', 'AccountController@edit')->name('account.edit');
 
 Route::resource('statuses', 'TaskStatusController');
 Route::resource('tasks', 'TaskController');
