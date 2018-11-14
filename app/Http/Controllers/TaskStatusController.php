@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskStatusRequest;
 use App\TaskStatus;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class TaskStatusController extends Controller
     public function index()
     {
         $statuses = TaskStatus::paginate(12);
-        return view('statuses.index', ['statuses' => $statuses]);
+        return view('statuses.index', compact('statuses'));
     }
 
     /**
@@ -40,11 +41,8 @@ class TaskStatusController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskStatusRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:task_statuses|min:3|max:255'
-        ]);
         $taskStatus = new TaskStatus($request->all());
         $taskStatus->save();
         session()->flash('notifications', 'Task Status Created');
@@ -53,7 +51,7 @@ class TaskStatusController extends Controller
 
     public function show(TaskStatus $status)
     {
-        return view('statuses.show', ['status' => $status]);
+        return view('statuses.show', compact('status'));
     }
 
     public function edit(TaskStatus $status)
@@ -61,11 +59,8 @@ class TaskStatusController extends Controller
         return view('statuses.edit', compact('status'));
     }
 
-    public function update(Request $request, TaskStatus $status)
+    public function update(TaskStatusRequest $request, TaskStatus $status)
     {
-        $request->validate([
-            'name' => 'required|unique:task_statuses|min:3|max:255'
-        ]);
         $status->update($request->all());
         session()->flash('notifications', 'Task Status Updated');
         return redirect(route('statuses.index'));

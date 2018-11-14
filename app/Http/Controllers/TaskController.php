@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskRequest;
 use App\Tag;
 use App\Task;
 use App\TaskStatus;
@@ -28,10 +29,7 @@ class TaskController extends Controller
         $statuses = TaskStatus::get(['name', 'id']);
         $executors = User::get(['name', 'id']);
         $tags = Tag::get(['name', 'id']);
-        return view('tasks.index', ['tasks' => $tasks,
-            'statuses' => $statuses,
-            'executors' => $executors,
-            'tags' => $tags]);
+        return view('tasks.index', compact('tasks', 'statuses', 'executors', 'tags'));
     }
 
     protected function getTasks(TaskFilters $filters)
@@ -54,7 +52,7 @@ class TaskController extends Controller
         $statuses = TaskStatus::all('id', 'name');
         $users = User::all('id', 'name');
         $tags = Tag::all('id', 'name');
-        return view('tasks.create', ['statuses' => $statuses, 'users' => $users, 'tags' => $tags]);
+        return view('tasks.create', compact('statuses', 'users', 'tags'));
     }
 
     /**
@@ -63,20 +61,11 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:255|min:3',
-            'description' => 'required|min:3',
-            'status_id' => 'required',
-            'executor_id' => 'required'
-        ]);
         $taskStatus = TaskStatus::find($request->input('status_id'));
         $user = auth()->user();
-        $task = $user->tasks()->create([
-            'name' => $request->input('name'),
-            'description' => $request->input('description')
-        ]);
+        $task = $user->tasks()->create($request->all());
         $task->status()->associate($taskStatus)->executor()->associate($request->input('executor_id'))->save();
         $task->syncTags($request->input('tags') ?? []);
         session()->flash('notifications', 'Task Created');
@@ -95,11 +84,7 @@ class TaskController extends Controller
         $executor = $task->executor;
         $tags = $task->tags;
         $creator = $task->user;
-        return view('tasks.show', ['task' => $task,
-            'status' => $status,
-            'executor' => $executor,
-            'tags' => $tags,
-            'creator' => $creator]);
+        return view('tasks.show', compact('task', 'status', 'executor', 'tags', 'creator'));
     }
 
     /**
@@ -115,14 +100,7 @@ class TaskController extends Controller
         $freeStatuses = TaskStatus::except($status->id)->get(['name', 'id']);
         $freeUsers = User::except($executor->id)->get(['name', 'email', 'id']);
         $tags = $task->tags;
-        return view('tasks.edit', [
-            'task' => $task,
-            'status' => $status,
-            'executor' => $executor,
-            'freeStatuses' => $freeStatuses,
-            'freeUsers' => $freeUsers,
-            'tags' => $tags
-        ]);
+        return view('tasks.edit', compact('task', 'status', 'executor', 'freeStatuses', 'freeUsers', 'tags'));
     }
 
     /**
@@ -132,14 +110,8 @@ class TaskController extends Controller
      * @param  \App\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(TaskRequest $request, Task $task)
     {
-        $request->validate([
-            'name' => 'required|max:255|min:3',
-            'description' => 'required|min:3',
-            'status_id' => 'required',
-            'executor_id' => 'required'
-        ]);
         $taskStatus = TaskStatus::find($request->input('status_id'));
         $task->name = $request->input('name');
         $task->description = $request->input('description');
