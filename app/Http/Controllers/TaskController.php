@@ -25,7 +25,6 @@ class TaskController extends Controller
     public function index(TaskFilters $filters)
     {
         $tasks = $this->getTasks($filters);
-//        dd($tasks);
         $statuses = TaskStatus::get(['name', 'id']);
         $executors = User::get(['name', 'id']);
         $tags = Tag::get(['name', 'id']);

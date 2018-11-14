@@ -18,6 +18,7 @@
                                 <span class="input-group-text" id="executor_select">Executors</span>
                             </div>
                             <select class="form-control custom-select" id="executor_select" name="executor" size="1">
+                                <option selected value>Choose a executor...</option>
                                 @foreach($executors as $executor)
                                     <option value="{{$executor->name}}">{{$executor->name}}</option>
                                 @endforeach
@@ -30,6 +31,7 @@
                                 <span class="input-group-text" id="status_select">Status</span>
                             </div>
                             <select class="form-control custom-select" id="status_select" name="status" size="1">
+                                <option selected value>Choose a status...</option>
                                 @foreach($statuses as $status)
                                     <option value="{{$status->name}}">{{$status->name}}</option>
                                 @endforeach
@@ -44,6 +46,7 @@
                                 <span class="input-group-text" id="tags_select">Tags</span>
                             </div>
                             <select id="tags_select" class="form-control custom-select" name="tags[]" size="1">
+                                <option selected value>Choose a tag...</option>
                                 @foreach($tags as $tag)
                                     <option value="{{ $tag->name }}"> {{ $tag->name }} </option>
                                 @endforeach

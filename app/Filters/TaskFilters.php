@@ -10,9 +10,9 @@ class TaskFilters extends Filters
 {
     protected $filters = [
         'creator',
-        'assigned',
+        'executor',
         'status',
-        'tag'
+        'tags'
     ];
 
     /**
@@ -57,7 +57,7 @@ class TaskFilters extends Filters
      * @param string $status
      * @return mixed
      */
-    protected function tag($tagName)
+    protected function tags($tagName)
     {
         return $this->builder->whereHas('tags', function (Builder $query) use ($tagName) {
             $query->where('name', $tagName);
