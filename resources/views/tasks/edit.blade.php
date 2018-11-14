@@ -32,9 +32,9 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="description" type="text" value="{{ $task->description }}"
-                                           class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
-                                           name="description" required>
+                                    <textarea id="description"
+                                              class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
+                                              name="description" required>{{ $task->description }}</textarea>
 
                                     @if ($errors->has('description'))
                                         <span class="invalid-feedback" role="alert">
@@ -44,26 +44,48 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <select class="custom-select" name="status_id" size="3">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="status">{{ __('Status') }}</label>
+                                </div>
+                                <select class="custom-select custom-select-lg" id="status" name="status_id" size="1">
                                     <option value="{{$status->id}}" selected>{{$status->name}}</option>
                                     @foreach($freeStatuses as $freeStatus)
                                         <option value="{{$freeStatus->id}}">{{$freeStatus->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group row">
-                                <select class="custom-select" name="executor_id" size="3">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="executor">{{ __('Executor') }}</label>
+                                </div>
+                                <select class="custom-select custom-select-lg" name="executor_id" size="1"
+                                        id="executor">
                                     <option value="{{$executor->id}}" selected>{{$executor->name}}</option>
                                     @foreach($freeUsers as $freeUser)
                                         <option value="{{$freeUser->id}}">{{$freeUser->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
-
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="tag_from">{{ __('Tags') }}</label>
+                                </div>
+                                <select id="tag_from" class="form-control" multiple="multiple" name="tags[]" size="1">
+                                    @foreach($tags as $tag)
+                                        <option value="{{ $tag->id }}" selected> {{ $tag->name }} </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('tags'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('tags') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-warning" data-confirm="Are you sure you want to save?">
+                                    <button type="submit" class="btn btn-warning"
+                                            data-confirm="Are you sure you want to save?">
                                         {{ __('Save') }}
                                     </button>
                                 </div>
@@ -74,5 +96,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#tag_from').select2({
+                tokenSeparators: [",", " "],
+                placeholder: 'Choose a tag...',
+                tags: true,
+            });
+        });
+    </script>
 @endsection
 

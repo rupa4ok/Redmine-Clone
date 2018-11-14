@@ -103,12 +103,14 @@ class TaskController extends Controller
         $executor = $task->executor;
         $freeStatuses = TaskStatus::except($status->id)->get(['name', 'id']);
         $freeUsers = User::except($executor->id)->get(['name', 'email', 'id']);
+        $tags = $task->tags;
         return view('tasks.edit', [
             'task' => $task,
             'status' => $status,
             'executor' => $executor,
             'freeStatuses' => $freeStatuses,
-            'freeUsers' => $freeUsers
+            'freeUsers' => $freeUsers,
+            'tags' => $tags
         ]);
     }
 
@@ -130,10 +132,11 @@ class TaskController extends Controller
         $taskStatus = TaskStatus::find($request->input('status_id'));
         $task->name = $request->input('name');
         $task->description = $request->input('description');
-        $updated = $task->status()->associate($taskStatus)
+        $task->status()->associate($taskStatus)
             ->executor()->associate($request->input('executor_id'))
             ->save();
-        $updated ? session()->flash('notifications', 'Task Updated') : session()->flash('error', 'error');
+        session()->flash('notifications', 'Task Updated');
+        $task->syncTags($request->input('tags', []));
         return redirect(route('tasks.index'));
     }
 
