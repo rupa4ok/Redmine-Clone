@@ -6,6 +6,7 @@ use App\Tag;
 use App\Task;
 use App\TaskStatus;
 use App\User;
+use App\Filters\TaskFilters;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -21,9 +22,10 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(TaskFilters $filters)
     {
-        $tasks = Task::filter($request->all())->paginate(12);
+        $tasks = $this->getTasks($filters);
+//        dd($tasks);
         $statuses = TaskStatus::get(['name', 'id']);
         $executors = User::get(['name', 'id']);
         $tags = Tag::get(['name', 'id']);
@@ -31,6 +33,16 @@ class TaskController extends Controller
             'statuses' => $statuses,
             'executors' => $executors,
             'tags' => $tags]);
+    }
+
+    protected function getTasks(TaskFilters $filters)
+    {
+        $threads = Task::with([
+            'tags',
+            'status',
+            'executor'
+        ])->latest()->filter($filters);
+        return $threads->paginate(10);
     }
 
     /**

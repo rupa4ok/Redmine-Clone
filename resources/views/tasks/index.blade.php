@@ -17,9 +17,9 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="executor_select">Executors</span>
                             </div>
-                            <select class="form-control custom-select" id="executor_select" name="executor_id" size="1">
+                            <select class="form-control custom-select" id="executor_select" name="executor" size="1">
                                 @foreach($executors as $executor)
-                                    <option value="{{$executor->id}}">{{$executor->name}}</option>
+                                    <option value="{{$executor->name}}">{{$executor->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -29,9 +29,9 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="status_select">Status</span>
                             </div>
-                            <select class="form-control custom-select" id="status_select" name="status_id" size="1">
+                            <select class="form-control custom-select" id="status_select" name="status" size="1">
                                 @foreach($statuses as $status)
-                                    <option value="{{$status->id}}">{{$status->name}}</option>
+                                    <option value="{{$status->name}}">{{$status->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -45,7 +45,7 @@
                             </div>
                             <select id="tags_select" class="form-control custom-select" name="tags[]" size="1">
                                 @foreach($tags as $tag)
-                                    <option value="{{ $tag->id }}"> {{ $tag->name }} </option>
+                                    <option value="{{ $tag->name }}"> {{ $tag->name }} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="input-group-append">
                                 <div class="input-group-text bg-light">
-                                    <input type="checkbox" name="my">
+                                    <input type="checkbox" name="creator" value="{{ auth()->user()->name }}">
                                 </div>
                             </div>
                         </div>

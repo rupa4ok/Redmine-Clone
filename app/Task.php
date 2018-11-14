@@ -39,24 +39,9 @@ class Task extends Model
         return $this->tags()->sync($tagIds);
     }
 
-    public function scopeFilter($query, $data)
+    public function scopeFilter($query, $filters)
     {
-        if (isset($data['executor_id'])) {
-            $query->executor($data['executor_id']);
-        }
-
-        if (isset($data['status_id'])) {
-            $query->status($data['status_id']);
-        }
-
-        if (isset($data['tags'])) {
-            $query->tags($data['tags']);
-        }
-
-        if (isset($data['my'])) {
-            $query->my();
-        }
-        return $query;
+        return $filters->apply($query);
     }
 
     public function scopeExecutor($query, $executor_id)
