@@ -12,7 +12,7 @@ class Task extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'creator_id');
     }
 
     public function status()

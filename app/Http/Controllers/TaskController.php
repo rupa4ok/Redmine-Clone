@@ -83,10 +83,12 @@ class TaskController extends Controller
         $status = $task->status;
         $executor = $task->executor;
         $tags = $task->tags;
+        $creator = $task->user;
         return view('tasks.show', ['task' => $task,
             'status' => $status,
             'executor' => $executor,
-            'tags' => $tags]);
+            'tags' => $tags,
+            'creator' => $creator]);
     }
 
     /**

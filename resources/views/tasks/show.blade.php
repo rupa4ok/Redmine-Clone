@@ -10,11 +10,15 @@
                                 class="badge badge-info"> {{ $status->name }} </span></div>
                     <div class="card-text mb-2"><strong>Description:</strong> {{ $task->description }}</div>
 
-                    <div class="list-group">
+                    <div class="list-group mb-2">
                         <button type="button" class="list-group-item list-group-item-action"><strong>Executor
                                 Name:</strong> {{ $executor->name }}</button>
                         <button type="button" class="list-group-item list-group-item-action"><strong>Executor
                                 Email:</strong> {{ $executor->email }}</button>
+                        <button type="button" class="list-group-item list-group-item-action"><strong>Creator
+                                Name:</strong> {{ $creator->name }}</button>
+                        <button type="button" class="list-group-item list-group-item-action"><strong>Executor
+                                Email:</strong> {{ $creator->email }}</button>
                         <button type="button" class="list-group-item list-group-item-action"><strong>Task Created
                                 At:</strong> {{ $task->created_at }}</button>
                         <button type="button" class="list-group-item list-group-item-action"><strong>TaskUpdated

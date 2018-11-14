@@ -53,7 +53,7 @@ class TaskStatusController extends Controller
 
     public function show(TaskStatus $status)
     {
-        return view('statuses.show', ['taskStatus' => $status]);
+        return view('statuses.show', ['status' => $status]);
     }
 
     public function edit(TaskStatus $status)

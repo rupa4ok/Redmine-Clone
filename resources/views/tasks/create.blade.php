@@ -35,12 +35,12 @@
                                        class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="description" type="text"
-                                           class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
-                                           name="description" required>
+                                    <textarea
+                                            class="form-control form-control{{ $errors->has('description') ? ' is-invalid' : '' }}"
+                                            name="description" required></textarea>
 
                                     @if ($errors->has('description'))
-                                        <span class="invalid-feedback" role="alert">
+                                            <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('description') }}</strong>
                                     </span>
                                     @endif
@@ -65,7 +65,8 @@
                                 <div class="input-group-prepend">
                                     <label class="input-group-text" for="executor">{{ __('Executor') }}</label>
                                 </div>
-                                <select class="custom-select custom-select-lg" name="executor_id" size="1" id="executor">
+                                <select class="custom-select custom-select-lg" name="executor_id" size="1"
+                                        id="executor">
                                     @foreach($users as $user)
                                         <option value="{{$user->id}}">{{$user->name}}</option>
                                     @endforeach
