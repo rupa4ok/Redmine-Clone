@@ -66,10 +66,10 @@ class TaskStatusController extends Controller
         return redirect(route('statuses.index'));
     }
 
-    public function destroy($id)
+    public function destroy(TaskStatus $status)
     {
-        $deleted = TaskStatus::find($id)->delete();
-        $deleted ? session()->flash('notifications', 'Task Status deleted') : session()->flash('error', 'error');
+        $status->delete();
+        session()->flash('notifications', 'Task Status deleted');
         return redirect(route('statuses.index'));
     }
 }
