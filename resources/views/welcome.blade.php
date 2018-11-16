@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/vkzhuk/Redmine-Clone">GitHub</a>
                 </div>
             </div>
         </div>
