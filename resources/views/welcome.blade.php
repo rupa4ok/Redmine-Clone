@@ -82,7 +82,7 @@
                 <div class="top-right links border-bottom">
                     <a href="{{ route('members') }}">Members</a>
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
